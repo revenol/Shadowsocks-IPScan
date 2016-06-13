@@ -5,6 +5,8 @@ Shadowsocks (https://github.com/shadowsocks/shadowsocks) provides a secure metho
 
 This progect select the best server from the list of server ips, which are included in the file 'gui-config.json'. It works on the windows platform by resorting to the 'ping' commard.
 
+Usage: put the file 'IPScan.py' in the same folder with 'gui-config.json'
+
 Input: 'gui-config.json'
 
 Output: a list of available server ips
