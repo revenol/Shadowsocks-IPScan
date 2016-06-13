@@ -1,0 +1,6 @@
+{
+  "name": "Shadowsocks-ipscan",
+  "tagline": "Find the best server from a list of server ip.",
+  "body": "### Shadowsocks IPScan.\r\nThis project helps you to find the best server ip from a list servers.\r\n\r\n### Authors and Contributors\r\nThis project is created by @revenol\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
