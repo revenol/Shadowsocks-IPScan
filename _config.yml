@@ -1,0 +1,8 @@
+title: Shadowsocks-ipscan
+description: Find the best server from a list of server ip.
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
