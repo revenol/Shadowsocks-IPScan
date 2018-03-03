@@ -37,7 +37,7 @@ def pingSingleIP(i, iq):
 		ip = iq.get()
 		# print "[*]Thread %s: Pinging %s" % (i,ip) 
 		# we change the default timeout value from 4000 to 500
-		ret = subprocess.Popen("ping -n 10 -w 500 %s" % ip, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+		ret = subprocess.Popen("ping -n 5 -w 500 %s" % ip, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		
 		stdout,stderr = ret.communicate()
 		stdout_str = stdout.decode('utf-8','ignore')
@@ -78,35 +78,38 @@ if __name__ == '__main__':
 
 	print (available_list)
 
-	min_delay = 1000
-	best_item = []
+	if len(available_list) > 0:
+		min_delay = 1000
+		best_item = []
 
-	for item in available_list:
-		if item[1] < min_delay:
-			min_delay = item[1]
-			best_item = item
+		for item in available_list:
+			if item[1] < min_delay:
+				min_delay = item[1]
+				best_item = item
 
-	print ("The best server (ip, delay in ms) : ", best_item)
-    
-    # find the optimal server index, which will be written into "gui-config.json" 
-	json_data['index'] = ip_list.index(best_item[0])
-	with open(os.path.join( os.path.dirname(os.path.realpath(__file__)), "gui-config.json"),'w') as jsonfile:
-		json.dump(json_data, jsonfile, ensure_ascii=False)
-    
-    # restart Shadowsocks.exe
-	subprocess.Popen("taskkill /f /im Shadowsocks.exe")
-	subprocess.Popen("taskkill /f /im ss_polipo.exe")
-	
-	sleep(1)
-	# find the Shadowsocks.exe file
-	txt_files = [f for f in os.listdir('.') if f.endswith('.exe')]
-	if len(txt_files) != 1:
-		raise ValueError('should be only one exe file in the current directory')
+		print ("The best server (ip, delay in ms) : ", best_item)
+		
+		# find the optimal server index, which will be written into "gui-config.json" 
+		json_data['index'] = ip_list.index(best_item[0])
+		with open(os.path.join( os.path.dirname(os.path.realpath(__file__)), "gui-config.json"),'w',encoding="utf8") as jsonfile:
+			json.dump(json_data, jsonfile, ensure_ascii=False)
+		
+		# restart Shadowsocks.exe
+		subprocess.Popen("taskkill /f /im Shadowsocks.exe")
+		subprocess.Popen("taskkill /f /im ss_polipo.exe")
+		
+		sleep(1)
+		# find the exe file
+		txt_files = [f for f in os.listdir('.') if f.endswith('.exe')]
+		if len(txt_files) != 1:
+			raise ValueError('should be only one exe file in the current directory')
 
-	filename = txt_files[0]
-	# subprocess.Popen("Shadowsocks.exe")
-	subprocess.Popen(filename)
-                           
+		filename = txt_files[0]
+		# subprocess.Popen("Shadowsocks.exe")
+		subprocess.Popen(filename)
+	else:
+		print("ERROR!!! no ip server available!!!") 
+				   
 	os.system("pause")
 
 
